@@ -9,7 +9,7 @@ class Solution:
                 if i + nums[i] >= n-1:
                     return steps
                 maxend = max(maxend, i+nums[i])
+            start = end+1
             end = maxend
-            start += 1
         return steps
         
