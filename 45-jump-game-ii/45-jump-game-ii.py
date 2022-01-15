@@ -1,15 +1,15 @@
 class Solution:
     def jump(self, nums: List[int]) -> int:
-        if len(nums) == 1:
-            return 0
-        # we can apply bfs
-        queue = [(0, 0)] # (node, level)
-        visited = [False for _ in range(len(nums))]
-        while queue:
-            curr, level = queue.pop(0)
-            for i in range(curr+1, curr+nums[curr]+1):
-                if i == len(nums)-1:
-                    return level+1
-                if visited[i] == False:
-                    visited[i] = True
-                    queue.append((i, level+1))
+        n, start, end, steps = len(nums), 0, 0, 0
+        while end < n-1:
+            steps += 1
+            maxend = end+1
+            
+            for i in range(start, maxend):
+                if i + nums[i] >= n-1:
+                    return steps
+                maxend = max(maxend, i+nums[i])
+            end = maxend
+            start += 1
+        return steps
+        
