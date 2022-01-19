@@ -11,14 +11,9 @@ class Solution:
         carry = 0
         
         while p != None or q != None:
-            if p != None:
-                x = p.val
-            else:
-                x = 0
-            if q != None:
-                y = q.val
-            else:
-                y = 0
+            x = p.val if p != None else 0
+            y = q.val if q != None else 0
+            
             res = x + y + carry
             carry = res//10
             curr.next = ListNode(res%10)
