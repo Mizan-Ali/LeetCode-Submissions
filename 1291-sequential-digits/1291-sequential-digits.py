@@ -1,45 +1,13 @@
+import math
 class Solution:
     def sequentialDigits(self, low: int, high: int) -> List[int]:
-        if low > 123456789:
-            return []
-        num = [str(i) for i in range(1, 10)]
-        startidx = int(str(low)[0])-1
-        Range = len(str(low))
-        if startidx + Range <= 9:
-            startnum = int(''.join(num[startidx : startidx + Range]))
-            print(startnum)
-        else:
-            startidx = 0
-            Range += 1
-            startnum = int(''.join(num[startidx : startidx + Range]))
-            print(startnum)
-        addtn = int('1' * Range)
+        nl = math.floor(math.log10(low)+1)
+        nh = math.floor(math.log10(high)+1)
+        arr = [str(i) for i in range(1, 10)]
         ans = []
-        while True:
-            if startnum < low:
-                if startnum%10 != 9:
-                    startnum += addtn
-                else:
-                    Range += 1
-                    startidx = 0
-                    addtn = int('1' * Range)
-                    startnum = int(''.join(num[startidx : startidx + Range]))
-            elif startnum > high:
-                break
-            elif startnum == 123456789:
-                ans.append(startnum)
-                break
-            else:
-                if startnum%10 != 9:
-                    ans.append(startnum)
-                    startnum += addtn
-                else:
-                    ans.append(startnum)
-                    Range += 1
-                    startidx = 0
-                    addtn = int('1' * Range)
-                    startnum = int(''.join(num[startidx : startidx + Range]))
-                    
+        for i in range(nl, nh+1):
+            for j in range(10-i):
+                num = int(''.join(arr[j:j+i]))
+                if num >= low and num <= high:
+                    ans.append(num)
         return ans
-        
-        
