@@ -4,23 +4,13 @@ class Solution:
         count = Counter(nums)
         res = {}
         ans = 0
-        for i in nums:
-            if i < k:
-                diff = k+i
-            else:
-                diff = i-k
+        for i in count.keys():
+            diff = i + k
             if diff in count:
-                temp = []
-                if diff != i:
-                    if count[i] > 0 and count[diff] > 0:
-                        temp = (max(i, diff), min(i, diff))
-                        
+                # print(i, diff)
+                if k != 0:
+                    ans += 1
                 else:
                     if count[i] >= 2:
-                        temp = (max(i, diff), min(i, diff))
-                if len(temp) == 2:
-                    if temp not in res:
-                        res[temp] = 1
                         ans += 1
-                        
         return ans
