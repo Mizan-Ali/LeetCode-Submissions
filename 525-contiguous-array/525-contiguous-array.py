@@ -1,14 +1,17 @@
 from collections import defaultdict
 class Solution:
     def findMaxLength(self, nums: List[int]) -> int:
-        if (1 not in nums) or (0 not in nums):
-            return 0
+        onePresent, zeroPresent = False, False
         temp = [0]
         for i in nums:
             if i == 1:
                 temp.append(temp[-1] + 1)
+                onePresent = True
             else:
                 temp.append(temp[-1] - 1)
+                zeroPresent = True
+        if (not onePresent) or (not zeroPresent):
+            return 0
         hmap = defaultdict(list)
         for idx, val in enumerate(temp):
             hmap[val].append(idx)
