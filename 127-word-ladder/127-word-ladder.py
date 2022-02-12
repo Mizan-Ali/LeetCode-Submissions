@@ -1,16 +1,14 @@
 from collections import defaultdict, Counter
 class Solution:
     def createGraph(self, wordList):
-        check = set(wordList)
+        check = {i: 0 for i in wordList}
         graph = defaultdict(list)
         visited = set()
         for word in wordList:
             for idx in range(len(word)):
                 newWords = []
                 for a in 'abcdefghijklmnopqrstuvwxyz':
-                    newWord = word[:idx] + a + word[idx+1:]
-                    newWords.append(newWord)
-                for new in newWords:
+                    new = word[:idx] + a + word[idx+1:]
                     if new in check:
                         graph[word].append(new)
                         graph[new].append(word)
