@@ -6,9 +6,7 @@ class Solution:
                 allsoln.append(partial[:])
                 return
             # pick
-            partial.append(nums[idx])
-            solve(idx+1, partial)
-            partial.pop()
+            solve(idx+1, partial + [nums[idx]])
             
             #skip
             solve(idx+1, partial)
