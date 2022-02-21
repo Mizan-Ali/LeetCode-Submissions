@@ -7,6 +7,9 @@ class Solution {
         for(int val: nums) {
             if(count.containsKey(val)) {
                 count.put(val, count.get(val)+1);
+                if(count.get(val) >= n/2) {
+                    return val;
+                }
             }
             else {
                 count.put(val, 1);
