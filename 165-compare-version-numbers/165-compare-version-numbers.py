@@ -10,9 +10,6 @@ class Solution:
             for _ in range(len(num1)-len(num2)):
                 num2.append('0')
         
-        print(num1)
-        print(num2)
-        
         a = ''
         for i in num1:
             a += str(int(i))
