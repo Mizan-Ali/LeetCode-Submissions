@@ -21,12 +21,8 @@ class Solution:
             b += str(int(i))
         # print(a)
         # print(b)
-        a = a if a != '' else '0'
-        b = b if b != '' else '0'
-        
-       
-        a = int(a)
-        b = int(b)
+        a = int(a) if a != '' else 0
+        b = int(b) if b != '' else 0
         
         if a < b:
             return -1
