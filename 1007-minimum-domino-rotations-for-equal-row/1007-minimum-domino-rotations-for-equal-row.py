@@ -4,9 +4,9 @@ class Solution:
         # Find the element common among all the dices
         a, b = tops[0], bottoms[0]
         for i in range(1, n):
-            if a not in (tops[i], bottoms[i]):
+            if a != tops[i] and a != bottoms[i]:
                 a = -1
-            if b not in (tops[i], bottoms[i]):
+            if b != tops[i] and b != bottoms[i]:
                 b = -1
         if a == -1 and b == -1:
             return -1
