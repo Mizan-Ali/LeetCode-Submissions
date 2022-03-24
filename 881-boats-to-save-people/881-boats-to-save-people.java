@@ -5,14 +5,13 @@ class Solution {
         
         while(i<=j) {
             if((people[i]+people[j]) <= limit) {
-                c++;
                 i++;
                 j--;
             }
             else {
-                c++;
                 j--;
             }
+            c++;
         }
         return c;
     }
