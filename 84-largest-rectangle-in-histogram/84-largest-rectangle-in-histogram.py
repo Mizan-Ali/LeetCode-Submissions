@@ -4,7 +4,7 @@ class Solution:
         stack = []
         left = [0 for i in range(n)]
         right = [0 for i in range(n)]
-        
+        maxArea = 0
         for i in range(n):
             if len(stack) == 0:
                 left[i] = 0
@@ -30,7 +30,6 @@ class Solution:
                 else:
                     right[i] = stack[-1]-1
                 stack.append(i)
-        maxArea = 0
-        for i in range(n):
             maxArea = max(maxArea, (right[i]-left[i]+1)*heights[i])
+        
         return maxArea
