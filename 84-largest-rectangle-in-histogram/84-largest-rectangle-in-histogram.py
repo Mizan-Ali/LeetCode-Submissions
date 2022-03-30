@@ -1,29 +1,36 @@
 class Solution:
-    def largestRectangleArea(self, h: List[int]) -> int:
-        left = [0 for _ in range(len(h))]
-        right = [0 for _ in range(len(h))]
-        s = []
-        for i in range(len(h)):
-            while len(s) > 0 and h[s[-1]] >= h[i]:
-                s.pop()
-            if len(s) == 0:
-                left[i] = 0
-            else:
-                left[i] = s[-1] + 1
-            s.append(i)
-        print(left)
-        s = []
-        for i in range(len(h)-1, -1, -1):
-            while len(s) > 0 and h[s[-1]] > h[i]:
-                s.pop()
-            if len(s) == 0:
-                right[i] = len(h)-1
-            else:
-                right[i] = s[-1] - 1
-            s.append(i)
-        ans = 0
-        for i in range(len(h)):
-            ans = max(ans, h[i] * (right[i]-left[i]+1))
-        return ans
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        n = len(heights)
+        stack = []
+        left = [0 for i in range(n)]
+        right = [0 for i in range(n)]
         
-            
+        for i in range(n):
+            if len(stack) == 0:
+                left[i] = 0
+                stack.append(i)
+            else:
+                while(len(stack)!=0 and heights[stack[-1]] >= heights[i]):
+                    stack.pop()
+                if len(stack) == 0:
+                    left[i] = 0
+                else:
+                    left[i] = stack[-1] + 1
+                stack.append(i)
+        stack = []
+        for i in range(n-1, -1, -1):
+            if len(stack) == 0:
+                right[i] = n-1
+                stack.append(i)
+            else:
+                while len(stack) != 0 and heights[stack[-1]] >= heights[i]:
+                    stack.pop()
+                if len(stack) == 0:
+                    right[i] = n-1
+                else:
+                    right[i] = stack[-1]-1
+                stack.append(i)
+        maxArea = 0
+        for i in range(n):
+            maxArea = max(maxArea, (right[i]-left[i]+1)*heights[i])
+        return maxArea
