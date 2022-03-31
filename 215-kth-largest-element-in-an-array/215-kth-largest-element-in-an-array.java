@@ -5,10 +5,10 @@ class Solution {
         for(int val: nums)
             pqueue.add(-val);
         int ans = 0;
-        while(k-1 != 0) {
-            pqueue.poll();
+        while(k != 0) {
+            ans = pqueue.poll();
             k--;
         }
-        return -pqueue.peek();
+        return -ans;
     }
 }
