@@ -19,17 +19,18 @@ class Solution:
             return -1
         # apply bfs
         n = len(grid)
-        queue = [(0, 0, 0)]
+        queue = [(0, 0)]
         dist = 0
         visited = {(0,0): True}
         while queue:
-            i, j, dist = queue.pop(0)
-            if i == n-1 and j == n-1:
-                return dist+1
-            neighbors = self.getNeighbors(i, j, visited, grid)
-            
-            for a, b in neighbors:
-                queue.append((a, b, dist+1))
-                visited[(a, b)] = True
-                
+            size = len(queue)
+            dist += 1
+            for _ in range(size):
+                i, j = queue.pop(0)
+                if i == n-1 and j == n-1:
+                    return dist
+                neighbors = self.getNeighbors(i, j, visited, grid)
+                for a, b in neighbors:
+                    queue.append((a, b))
+                    visited[(a, b)] = True
         return -1
