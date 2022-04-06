@@ -8,8 +8,7 @@ class Solution:
                     dp[i][j] = 1 + dp[i-1][j-1]
                 else:
                     dp[i][j] = max(dp[i-1][j], dp[i][j-1])
-                ans = max(ans, dp[i][j])
-        return ans
+        return dp[-1][-1]
                     
     def longestPalindromeSubseq(self, s: str) -> int:
         return self.lcs(s, s[::-1])
