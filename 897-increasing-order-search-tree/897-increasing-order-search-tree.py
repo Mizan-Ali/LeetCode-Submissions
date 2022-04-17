@@ -10,8 +10,8 @@ class Solution:
         dummy = TreeNode()
         curr = dummy
         
-        while stack or root:
-            while root:
+        while len(stack) != 0  or root != None:
+            while root != None:
                 stack.append(root)
                 root = root.left
             root = stack.pop()
