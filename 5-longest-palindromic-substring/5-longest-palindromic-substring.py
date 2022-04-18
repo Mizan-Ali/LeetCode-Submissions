@@ -1,35 +1,31 @@
 class Solution:
     def longestPalindrome(self, s: str) -> str:
         n = len(s)
-        dp = [[-1 for _ in range(n)] for _ in range(n)]
+        dp = [[0 for _ in range(n+1)] for _ in range(n+1)]
+        startIdx, maxLen = 0, 1
         
-        # Fill the one size substr
-        maxlen = 1
         for i in range(n):
-            dp[i][i] = 1
+            dp[i+1][i+1] = 1
             
-        start = 0
-        # Fill two sized substr
-        for i in range(n-1):
-            if s[i] == s[i+1]:
-                dp[i][i+1] = 1
-                maxlen = 2
-                start = i
-            else:
-                dp[i][i+1] = 0
+            if i+1 < n:
+                if s[i] == s[i+1]:
+                    startIdx = i
+                    maxLen = 2
+                    dp[i+1][i+2] = 1
         
         gap = 3
-        while gap <= n:
-            i = 0
-            while i < (n-gap+1):
-                j = i+gap-1
-                if s[i] == s[j] and dp[i+1][j-1] == 1:
-                    dp[i][j] = 1
-                    
-                    if gap > maxlen:
-                        maxlen = gap
-                        start = i
-                i += 1
+        row = 1
+        while gap < n+1:
+            for row in range(1, len(dp)-gap+1):
+                i = row
+                j = row + gap - 1
+                if s[i-1] == s[j-1]:
+                    if dp[i+1][j-1] == 1:
+                        dp[i][j] = 1
+                        
+                        if(j-i)+1 > maxLen:
+                            startIdx = i-1
+                            maxLen = (j-i)+1
             gap += 1
-            
-        return s[start: start+maxlen]
+        
+        return s[startIdx: startIdx+maxLen]
