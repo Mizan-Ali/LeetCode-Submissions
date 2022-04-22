@@ -9,7 +9,7 @@ class Solution:
                 if nums1[i] == nums2[j]:
                     dp[(i, j)] = 1 + solve(i+1, j+1)
                 else:
-                    dp[(i, j)] = max(solve(i+1, j+1), solve(i+1, j), solve(i, j+1))
+                    dp[(i, j)] = max(solve(i+1, j), solve(i, j+1))
             return dp[(i, j)]
 
         i, j = 0, 0
