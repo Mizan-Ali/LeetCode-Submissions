@@ -3,9 +3,9 @@ class Solution:
         n = len(nums)
         ans = []
         visited = {}
+        nums.sort()
         def solve(idx, partial):
             if idx == n:
-                partial.sort()
                 if tuple(partial) not in visited:
                     visited[tuple(partial)] = 1
                     ans.append(partial)
