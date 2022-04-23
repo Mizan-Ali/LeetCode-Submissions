@@ -1,16 +1,17 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
+        n = len(nums)
+        allsoln = []
         def solve(idx, partial):
-            global allsoln
-            if idx == len(nums):
-                allsoln.append(partial[:])
+            if idx == n:
+                allsoln.append(partial)
                 return
-            # pick
+            
+            # Pick
             solve(idx+1, partial + [nums[idx]])
             
-            #skip
+            # Skip
             solve(idx+1, partial)
-        global allsoln
-        allsoln = []
+        
         solve(0, [])
         return allsoln
