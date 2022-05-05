@@ -1,26 +1,15 @@
 class Solution:
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
-        row, col = len(grid), len(grid[0])
-        
-        def bfs(i, j):
-            queue = [(i, j)]
-            component = 0
-            while queue:
-                x, y = queue.pop(0)
-                if 0 <= x < row and 0 <= y < col and grid[x][y] == 1:
-                    component += 1
-                    grid[x][y] = 0
-                    dx = [-1, +1, 0, 0]
-                    dy = [0, 0, -1, +1]
-                    for a, b in zip(dx, dy):
-                        queue.append((x+a, y+b))
-            return component
-                        
+        def dfs(i, j):
+            if (0 <= i < len(grid)) and (0 <= j < len(grid[0])) and grid[i][j] == 1:
+                grid[i][j] = 0    
+                return (1 + dfs(i+1, j) + dfs(i-1, j) + dfs(i, j-1) + dfs(i, j+1))
+            return 0
         
         maxArea = 0
-        for i in range(row):
-            for j in range(col):
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
                 if grid[i][j] == 1:
-                    componentSize = bfs(i, j)
-                    maxArea = max(maxArea, componentSize)
+                    maxArea = max(maxArea, dfs(i, j))
         return maxArea
+                
