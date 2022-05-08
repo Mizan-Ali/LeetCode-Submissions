@@ -1,38 +1,33 @@
-from collections import defaultdict, Counter
+from collections import defaultdict
 class Solution:
     def createGraph(self, wordList):
-        check = {i: 0 for i in wordList}
         graph = defaultdict(list)
-        visited = set()
+        check = {word: 0 for word in wordList}
         for word in wordList:
             for idx in range(len(word)):
-                newWords = []
-                for a in 'abcdefghijklmnopqrstuvwxyz':
-                    new = word[:idx] + a + word[idx+1:]
-                    if new in check:
-                        graph[word].append(new)
-                        graph[new].append(word)
+                for char in 'abcdefghijklmnopqrstuvwxyz':
+                    newWord = word[:idx] + char + word[idx+1:]
+                    if newWord in check:
+                        graph[newWord].append(word)
+                        graph[word].append(newWord)
         return graph
-            
+    
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
-        # Create a graph and apply bfs from source to destination
-        if (endWord not in wordList) or (not wordList):
-            return 0
-        
         wordList.append(beginWord)
         graph = self.createGraph(wordList)
         
         
+        if endWord not in graph or len(wordList) == 1:
+            return 0
+        
         queue = [(beginWord, 1)]
-        visited = {i: False for i in wordList}
-        visited[beginWord] = True
+        visited = {word: False for word in wordList}
         while queue:
             word, dist = queue.pop(0)
             if word == endWord:
                 return dist
-            for nextWord in graph[word]:
-                if not visited[nextWord]:
-                    visited[nextWord] = True
-                    queue.append((nextWord, dist+1))
-                    
+            for child in graph[word]:
+                if not visited[child]:
+                    visited[child] = True
+                    queue.append((child, dist+1))
         return 0
