@@ -1,12 +1,10 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        minsofar = float('inf')
-        maxsofar = 0
+        min_so_far = float('inf')
+        max_profit = 0
         
-        for i, val in enumerate(prices):
-            if val < minsofar:
-                minsofar = val
-            elif maxsofar < prices[i] - minsofar:
-                maxsofar = prices[i] - minsofar
-        return maxsofar
-        
+        for i in prices:
+            min_so_far = min(min_so_far, i)
+            max_profit = max(max_profit, i - min_so_far)
+            
+        return max_profit
