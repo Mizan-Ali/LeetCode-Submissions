@@ -1,23 +1,21 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         dp = {}
-        def solve(day, count):
-            if (day, count) not in dp:
-                if day == len(prices):
-                    return 0
-                if count == 4:
-                    return 0
-                # skip
-                a = solve(day+1, count)
-
-                # Buy or sell
-                buy = count % 2 == 0
-                if buy:
-                    b = solve(day+1, count+1) - prices[day]
-                else:
-                    b = solve(day+1, count+1) + prices[day]
-                dp[(day, count)] = max(a, b)
-            return dp[(day, count)]
+        def memo(idx, buy, count):
+            if idx == len(prices):
+                return 0
+            if count == 4:
+                return 0
+            if (idx, buy, count) in dp:
+                return dp[(idx, buy, count)]
+            if buy == 1 and count < 4:
+                dp[(idx, buy, count)] = max(-prices[idx] + memo(idx+1, 0, count+1),
+                            0 + memo(idx+1, 1, count))
+                
+            elif buy == 0 and count <= 4:
+                dp[(idx, buy, count)] = max(prices[idx] + memo(idx+1, 1, count+1),
+                            0 + memo(idx+1, 0, count))
+            return dp[(idx, buy, count)]
         
-        idx = day = 0
-        return solve(idx, day)
+        return memo(0, 1, 0)
+    
