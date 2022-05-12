@@ -3,7 +3,7 @@ class Solution:
         l, h = 0, len(nums)-1
         res = nums[0]        
         while l <= h:
-            mid = math.ceil(l + (h-l)/2)
+            mid = (l+h)//2
             res = min(res, nums[mid])
             if nums[l] <= nums[h]:
                 # Already sorted
