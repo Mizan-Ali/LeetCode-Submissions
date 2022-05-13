@@ -1,18 +1,20 @@
 class Solution:
-    def backtrack(self, partial, to_pick):
+    def backtrack(self, partial, to_pick, visited):
         if len(partial) == self.n:
             self.allsoln.append(partial[:])
             return
         
         for idx, val in enumerate(to_pick):
-            if val in partial:
+            if visited[val] == True:
                 continue
             partial.append(val)
-            self.backtrack(partial, to_pick)
+            visited[val] = True
+            self.backtrack(partial, to_pick, visited)
+            visited[val] = False
             partial.pop()
         
     def permute(self, nums: List[int]) -> List[List[int]]:
         self.allsoln = []
         self.n = len(nums)
-        self.backtrack([], nums)
+        self.backtrack([], nums, {i: False for i in nums})
         return self.allsoln
