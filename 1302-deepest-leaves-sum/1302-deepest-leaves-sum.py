@@ -4,25 +4,27 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
-from collections import defaultdict
 class Solution:
-    def deepestLeavesSum(self, root: Optional[TreeNode]) -> int:
-        depth, maxdepth = 0, 0
-        ans = 0
-        queue = [(root, depth)]
+    def leaves_sum(self, node):
+        if node.left == None and node.right == None:
+            if self.depth > self.maxdepth:
+                self.maxdepth = self.depth
+                self.result = node.val
+                print(self.result)
+            elif self.depth == self.maxdepth:
+                self.result += node.val
+                print(self.result)
+            return
+        if node.left:
+            self.depth += 1
+            self.leaves_sum(node.left)
+            self.depth -= 1
+        if node.right:
+            self.depth += 1
+            self.leaves_sum(node.right)
+            self.depth -= 1
         
-        while queue:
-            node, depth = queue.pop(0)
-            
-            if node.left == None and node.right == None:
-                if depth > maxdepth:
-                    maxdepth = depth
-                    ans = node.val
-                elif depth == maxdepth:
-                    ans += node.val
-            if node.left:
-                queue.append((node.left, depth+1))
-            if node.right:
-                queue.append((node.right, depth+1))
-        return ans
-                
+    def deepestLeavesSum(self, root: Optional[TreeNode]) -> int:
+        self.depth, self.maxdepth, self.result = 0, 0, 0
+        self.leaves_sum(root)
+        return self.result
