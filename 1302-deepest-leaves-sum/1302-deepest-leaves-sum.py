@@ -7,15 +7,22 @@
 from collections import defaultdict
 class Solution:
     def deepestLeavesSum(self, root: Optional[TreeNode]) -> int:
-        queue = [(root, 0)]
-        levelMap = defaultdict(int)
-        while queue:
-            node, level = queue.pop(0)
-            levelMap[level] += node.val
-            if node.left:
-                queue.append((node.left, level+1))
-            if node.right:
-                queue.append((node.right, level+1))
-        max_level = max(levelMap.keys())
+        depth, maxdepth = 0, 0
+        ans = 0
+        queue = [(root, depth)]
         
-        return levelMap[max_level]
+        while queue:
+            node, depth = queue.pop(0)
+            
+            if node.left == None and node.right == None:
+                if depth > maxdepth:
+                    maxdepth = depth
+                    ans = node.val
+                elif depth == maxdepth:
+                    ans += node.val
+            if node.left:
+                queue.append((node.left, depth+1))
+            if node.right:
+                queue.append((node.right, depth+1))
+        return ans
+                
