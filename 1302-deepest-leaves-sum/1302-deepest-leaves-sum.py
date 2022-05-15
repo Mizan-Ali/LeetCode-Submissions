@@ -10,10 +10,8 @@ class Solution:
             if self.depth > self.maxdepth:
                 self.maxdepth = self.depth
                 self.result = node.val
-                print(self.result)
             elif self.depth == self.maxdepth:
                 self.result += node.val
-                print(self.result)
             return
         if node.left:
             self.depth += 1
