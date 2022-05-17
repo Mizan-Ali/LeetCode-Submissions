@@ -8,11 +8,10 @@ class Solution:
         while j >= 0:
             if nums1[i] >= nums2[j] and i >= 0:
                 nums1[ptr] = nums1[i]
-                ptr -= 1
                 i -= 1
             else:
                 nums1[ptr] = nums2[j]
-                ptr -= 1
                 j -= 1
+            ptr -= 1
         
       
