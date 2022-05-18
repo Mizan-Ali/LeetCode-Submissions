@@ -1,51 +1,49 @@
 class Solution:
-    def maxHistogram(self, arr):
-        n = len(arr)
-        left = [0 for _ in range(n)]
-        right = [0 for _ in range(n)]
-        stack = []
-        for i in range(n):
+    def maxRectInHistogram(self, heights):
+        n = len(heights)
+        left = [0 for i in range(n)]
+        stack = [0]
+        for i in range(1, n):
+            while len(stack) != 0 and heights[stack[-1]] >= heights[i]:
+                stack.pop()
             if len(stack) == 0:
                 left[i] = 0
-                stack.append(i)
             else:
-                while len(stack) != 0 and arr[stack[-1]] >= arr[i]:
-                    stack.pop()
-                if len(stack) == 0:
-                    left[i] = 0
-                else:
-                    left[i] = stack[-1] + 1
-                stack.append(i)
-        stack = []
-        for i in range(n-1, -1, -1):
+                left[i] = stack[-1] + 1
+            stack.append(i)
+        right = [0 for i in range(n)]
+        stack = [n-1]
+        right[n-1] = n-1
+        for i in range(n-2, -1, -1):
+            while len(stack) != 0 and heights[stack[-1]] >= heights[i]:
+                stack.pop()
             if len(stack) == 0:
                 right[i] = n-1
-                stack.append(i)
             else:
-                while len(stack) != 0 and arr[stack[-1]] >= arr[i]:
-                    stack.pop()
-                if len(stack) == 0:
-                    right[i] = n-1
-                else:
-                    right[i] = stack[-1]-1
-                stack.append(i)
+                right[i] = stack[-1] - 1
+            stack.append(i)
         maxArea = 0
         for i in range(n):
-            maxArea = max(maxArea, arr[i] * (right[i]-left[i]+1))
-        return maxArea    
-            
+            maxArea = max(maxArea, (right[i]-left[i]+1)*heights[i])
+        print(maxArea)
+        print(left, "  - ", right)
+        
+        return maxArea
+
+    
     def maximalRectangle(self, matrix: List[List[str]]) -> int:
         row, col = len(matrix), len(matrix[0])
-        mat = [[0 for _ in range(col)] for _ in range(row)]
+        rect = [[0 for i in range(col)] for j in range(row)]
         
-        for i in range(row):
-            for j in range(col):
-                if i == 0:
-                    mat[i][j] = int(matrix[i][j])
+        for i in range(col):
+            for j in range(row):
+                if j == 0:
+                    rect[j][i] = int(matrix[j][i])
                 else:
-                    if matrix[i][j] == "1":
-                        mat[i][j] = 1 + mat[i-1][j]
+                    if matrix[j][i] == "1":
+                        rect[j][i] = rect[j-1][i] + 1
         maxArea = 0
-        for i in range(row):
-            maxArea = max(maxArea, self.maxHistogram(mat[i]))
+        for R in rect:
+            print(R)
+            maxArea = max(maxArea, self.maxRectInHistogram(R))
         return maxArea
