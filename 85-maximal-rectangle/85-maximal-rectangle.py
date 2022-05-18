@@ -25,9 +25,6 @@ class Solution:
         maxArea = 0
         for i in range(n):
             maxArea = max(maxArea, (right[i]-left[i]+1)*heights[i])
-        print(maxArea)
-        print(left, "  - ", right)
-        
         return maxArea
 
     
@@ -44,6 +41,5 @@ class Solution:
                         rect[j][i] = rect[j-1][i] + 1
         maxArea = 0
         for R in rect:
-            print(R)
             maxArea = max(maxArea, self.maxRectInHistogram(R))
         return maxArea
