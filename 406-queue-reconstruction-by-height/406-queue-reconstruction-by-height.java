@@ -9,10 +9,24 @@ class Solution {
                     return a1[1] - a2[1];
             }
         });
-        List<int[]> res = new LinkedList<>();
+        int[][] res = new int[people.length][2];
         for(int[] curr: people) {
-            res.add(curr[1], curr);
+            int idx = curr[1];
+            if(res[idx] == new int[2]) {
+                res[idx] = curr;
+            }
+            else {
+                // right shift
+                int[] temp = res[idx];
+                while((idx < res.length-1) && (res[idx] != new int[2])) {
+                    int[] temp1 = res[idx+1];
+                    res[idx+1] = temp;
+                    temp = temp1;
+                    idx++;
+                }
+                res[curr[1]] = curr;
+            }
         }
-        return res.toArray(new int[people.length][]);
+        return res;
     }
 }
